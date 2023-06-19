@@ -1,0 +1,325 @@
+{% extends 'dashboard/base.html' %}
+	
+{% load static %}
+{% block content %}
+
+
+{% comment %} <div class="col-lg-12 grid-margin stretch-card">
+    <div class="card"> {% endcomment %}
+      <div class="card-body table-responsive">
+        <h4 class="card-title">Products</h4>
+        
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#productModal">Add Product</button>
+        <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="productModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="productModalLabel">Add Product</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      <form action="{% url 'add_product' %}" method ="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                          <div class="form-group">
+                              <label for="productName">Product Name</label>
+                              <input type="text" class="form-control" id="productName" name="product_name" placeholder="Enter product name">
+                          </div>
+                          <div class="form-group">
+                            <label for="productName">Price</label>
+                            <input type="text" class="form-control" id="productName" name="price" placeholder="Enter product price">
+                        </div>
+                        <div class="form-group">
+                          <label for="productName">stock</label>
+                          <input type="text" class="form-control" id="productName" name="stock" placeholder="Enter product stock">
+                      </div>
+                    
+                          <div class="form-group">
+                              <label for="productCategory">Category</label>
+                              <select class="form-control" id="productCategory" name="category">
+                                 
+                                 {% for i in category %}
+                                 <option value="{{i.category_name}}">{{i.category_name}}</option>
+                                 {% endfor %}
+                                     
+                                
+                                  
+                              </select>
+                          </div>
+                          <div class="form-group">
+                            <label for="productCategory">Category</label>
+                            <select class="form-control" id="productCategory" name="sub_category">
+                               
+                               {% for i in sub_category %}
+                               <option value="{{i.sub_category_name}}">{{i.sub_category_name}}</option>
+                               {% endfor %}
+                                   
+                              
+                                
+                            </select>
+                        </div>
+                        <div class="form-group">
+                          <label for="productCategory">Price Range</label>
+                          <select class="form-control" id="productCategory" name="price_range">
+                             
+                             {% for i in price_range %}
+                             <option value="{{i.price_range}}">{{i.price_range}}</option>
+                             {% endfor %}
+                                 
+                          </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="productCategory">offer</label>
+                        <select class="form-control" id="productCategory" name="offer">
+                          <option value="" disabled selected>Choose an option</option>
+                           {% for i in offer %}
+                           <option value="{{i.offer_name}}">{{i.offer_name}}</option>
+                           {% endfor %}
+                               
+                        </select>
+                    </div>
+                          
+                          <div class="form-group">
+                              <label for="productImages">Product Image </label>
+                              <input type="file" class="form-control-file" id="productImages" name="image">
+                          </div>
+                          <div class="form-group">
+                            <label for="productImages">Product Image </label>
+                            <input type="file" class="form-control-file" id="productImages" name="image1">
+                        </div>
+                        <div class="form-group">
+                          <label for="productImages">Product Image </label>
+                          <input type="file" class="form-control-file" id="productImages" name="image2">
+                      </div>
+                      <div class="form-group">
+                        <label for="productImages">Product Image </label>
+                        <input type="file" class="form-control-file" id="productImages" name="image3">
+                    </div>
+                    <div class="form-group">
+                      <label for="productDescription">Product Description</label>
+                      <textarea class="form-control" id="productDescription" placeholder="Enter product description" name="description"></textarea>
+                  </div>
+                      
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Save</button>
+                  </div>
+                </form>
+              </div>
+          </div>
+      </div>
+      
+        <!-- </p></a> -->
+        
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th> ID</th>
+              <th> Product_name </th>
+              <th> price </th>
+              <th> image </th>
+              <th> stock </th>
+              <th> category</th>
+              <th> description </th>
+              <th> is_active </th>
+
+              
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in products %}
+            <tr>
+              
+              <td> {{i.id}} </td>
+              <td> {{i.product_name}}</td>
+              <td> {{i.price}}</td>
+              <td><img class="tbl-thumb" src="{{i.images.url}}" style="height: 70px;width: 70px;" alt="Product Image" /></td>
+              <td> {{i.stock}}</td>
+              <td> {{i.category}} </td>
+              <td> {{i.description}} </td>
+              <td> {{i.is_available}} </td>
+              <!-- Button for deleting product -->
+<td>
+  <button class="btn btn-danger me-2" data-toggle="modal" data-target="#deleteProductModal-{{ i.id }}">Delete</button>
+</td>
+
+<!-- Modal for deleting product -->
+<div class="modal fade" id="deleteProductModal-{{ i.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteProductModalLabel-{{ i.id }}" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteProductModalLabel-{{ i.id }}">Confirm Delete Product</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this product?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <a class="btn btn-danger" href="{% url 'product_delete' i.id%}">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Include Bootstrap CSS and JavaScript -->
+{% comment %} <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> {% endcomment %}
+
+              <td> <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#productModal2{{forloop.counter}}">edit</button> </td>
+              
+              <div class="modal fade" id="productModal2{{forloop.counter}}" tabindex="-1" role="dialog" aria-labelledby="productModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="productModalLabel">Edit Product</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{% url 'product_edit' i.id %}" method ="post" enctype="multipart/form-data">
+                              {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="productName">Product Name</label>
+                                    <input type="text" class="form-control" id="productName" name="product_name" placeholder="Enter product name" value="{{i.product_name}}">
+                                </div>
+                                <div class="form-group">
+                                  <label for="productName">Price</label>
+                                  <input type="text" class="form-control" id="productName" name="price" placeholder="Enter product name" value="{{i.price}}">
+                              </div>
+                              <div class="form-group">
+                                <label for="productName">stock</label>
+                                <input type="text" class="form-control" id="productName" name="stock" placeholder="Enter product name" value="{{i.stock}}">
+                            </div>
+                          
+                                <div class="form-group">
+                                    <label for="productCategory">Category</label>
+                                    <select class="form-control" id="productCategory" name="category">
+                                      
+                                       {% for i in category %}
+                                       <option value="{{i.category_name}}">{{i.category_name}}</option>
+                                       {% endfor %}  
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                  <label for="productCategory">Sub Category</label>
+                                  <select class="form-control" id="productCategory" name="sub_category">
+                                     
+                                     {% for i in sub_category %}
+                                     <option value="{{i.sub_category_name}}">{{i.sub_category_name}}</option>
+                                     {% endfor %}
+                                  
+                                  </select>
+                              </div>
+
+                              <div class="form-group">
+                                <label for="productCategory">Price Range</label>
+                                <select class="form-control" id="productCategory" name="price_range">
+                                   
+                                   {% for i in price_range %}
+                                   <option value="{{i.price_range}}">{{i.price_range}}</option>
+                                   {% endfor %}
+                                       
+                                </select>
+                            </div>
+                              <div class="form-group">
+                                <label for="productCategory">offer</label>
+                                <select class="form-control" id="productCategory" name="offer">
+                                   <option selected disabled value="">choose an option</option>
+                                   {% for i in offer %}
+              
+                                   <option value="{{i.offer_name}}">{{i.offer_name}}</option>
+                                   {% endfor %}
+                                       
+                                </select>
+                            </div>
+                              
+                              <div style="width: 100px;" class="card-header category-img position-relative overflow-hidden bg-transparent border p-0">
+                                <img class="img-fluid w-100" src="{{i.images.url}} " alt="">
+                              </div>
+                                <div class="form-group">
+                                    <label for="productImages">Product Image </label>
+                                    <input type="file" class="form-control-file" id="productImages" name="image">
+                                </div>
+                                <div style="width: 100px;" class="card-header category-img position-relative overflow-hidden bg-transparent border p-0">
+                                  <img class="img-fluid w-100" src="{{i.image1.url}} " alt="">
+                                </div>
+                                <div class="form-group">
+                                  <label for="productImages">Product Image </label>
+                                  <input type="file" class="form-control-file" id="productI
+                                  mages" name="image1">
+                              </div>
+                              <div style="width: 100px;" class="card-header category-img position-relative overflow-hidden bg-transparent border p-0">
+                                <img class="img-fluid w-100" src="{{i.image2.url}} " alt="">
+                              </div>
+                              <div class="form-group">
+                                <label for="productImages">Product Image </label>
+                                <input type="file" class="form-control-file" id="productImages" name="image2">
+                            </div>
+                            <div style="width: 100px;" class="card-header category-img position-relative overflow-hidden bg-transparent border p-0">
+                              <img class="img-fluid w-100" src="{{i.image3.url}} " alt="">
+                            </div>
+                            <div class="form-group">
+                              <label for="productImages">Product Image </label>
+                              <input type="file" class="form-control-file" id="productImages" name="image3">
+                          </div>
+                          <div class="form-group">
+                            <label for="productDescription">Product Description</label>
+                            <textarea class="form-control" id="productDescription" placeholder="Enter product description" name="description">{{i.description}}</textarea>
+                        </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                      </form>
+                    </div>
+                </div>
+            </div>
+                
+        </div>
+                          
+                      
+            
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                   </div>
+
+              {% comment %} {% if i.is_active %}
+              <td> Active </td>
+              <td> <a class="btn btn-primary me-2" href="{% url 'blockuser' i.id%}" role="button">block</a> </td>
+              {% else %}
+              <td> Blocked </td>
+              <td> <a class="btn btn-primary me-2" href="{% url 'blockuser' i.id%}" role="button">unblock</a> </td>
+              {% endif %} {% endcomment %}
+              
+            </tr>
+          {% endfor %}
+            
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  {% comment %} </div>  {% endcomment %}
+  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+ -->
+ <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+ <script>
+  {% for msg in messages %}
+    swal("", "{{msg}}", "error");
+  {% endfor %}
+  </script>
+ <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock %}

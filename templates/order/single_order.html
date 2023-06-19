@@ -1,0 +1,364 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %} 
+
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.5.0/css/bootstrap.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.5.0/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" type="text/css" href="{%static 'stylesSifan.min.css'%}">
+<link rel="stylesheet" type="text/css" href="{%static 'lastStyle.css'%}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<!-- ajax -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs/build/css/alertify.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs/build/css/themes/default.min.css" />
+
+
+<div class="col-lg-12" style="height: 150px;"">
+
+</div>
+  <!--================ confirmation part start =================-->
+  <section class="confirmation_part padding_top cartdata ">
+    <div class="container">
+      <div class="row">
+        
+        <div class="text-center text-danger">
+          {% if messages %}
+              {% for message in messages %}
+                  <strong>{{ message }}</strong>
+              {% endfor %}
+          {% endif %}
+      </div>
+                
+        <div class="col-lg-6 col-lx-4">
+          <div class="card border rounded  mb-3">
+            <div class="card-body">
+              <h5 class="card-title" style="font-weight: bold;">{{address.first_name}} {{address.last_name}}</h5>
+              <p class="card-text">{{address.address}},{{address.city}},{{address.state}} </p>
+              <div>
+                <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#address{{forloop.counter}}">
+                    View
+                  </button>
+
+                  <!-- Modal -->
+                  <div style="margin-top: 80px;" class="modal fade" id="address{{forloop.counter}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title fs-6" id="staticBackdropLabel">View address</h4>
+                          <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-times"></i>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <div class="row">
+                            <div class="col-sm-5">
+                              <p class="mb-0">Full Name</p>
+                            </div>
+                            <div class="col-sm-7">
+                                {{ address.first_name}} {{ address.last_name}}
+                            </div>
+                          </div>
+                          <hr>
+
+                          <div class="row">
+                            <div class="col-sm-5">
+                              <p class="mb-0">Address</p>
+                            </div>
+                            <div class="col-sm-7">
+                                {{ address.address}}
+                            </div>
+                          </div>
+                          <hr>
+
+                          <div class="row">
+                            <div class="col-sm-5">
+                              <p class="mb-0">Contact Number</p>
+                            </div>
+                            <div class="col-sm-7">
+                                {{ address.phone}}
+                            </div>
+                          </div>
+                          <hr>
+
+                          <div class="row">
+                            <div class="col-sm-5">
+                              <p class="mb-0">Email</p>
+                            </div>
+                            <div class="col-sm-7">
+                                {{ address.email}}
+                            </div>
+                          </div>
+                          <hr>
+
+                          <div class="row">
+                            <div class="col-sm-5">
+                              <p class="mb-0">City</p>
+                            </div>
+                            <div class="col-sm-7">
+                                {{ address.city}}
+                            </div>
+                          </div>
+                          <hr>
+
+                          <div class="row">
+                            <div class="col-sm-5">
+                              <p class="mb-0">Pincode</p>
+                            </div>
+                            <div class="col-sm-7">
+                                {{ address.pincode}}
+                            </div>
+                          </div>
+                          <hr>
+
+                          <div class="row">
+                            <div class="col-sm-5">
+                              <p class="mb-0">State</p>
+                            </div>
+                            <div class="col-sm-7">
+                                {{ address.state}}
+                            </div>
+                          </div>
+                          <hr>
+
+                          <div class="row">
+                            <div class="col-sm-5">
+                              <p class="mb-0">Country</p>
+                            </div>
+                            <div class="col-sm-7">
+                                {{ address.country}}
+                            </div>
+                          </div>
+
+
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-lx-4">
+          <div class="card border rounded  mb-3">
+            <div class="card-body">
+              <h6 class="card-title" style="font-weight: bold;">ORDER INFO</h6>
+              <p class="card-text">Tracking Id<span> : {{order.tracking_no}}</span></p>
+              <p class="card-text">Order Date<span> : {{order.created_at}}</span></p>
+              <p class="card-text">Payment Method<span> : {{order.payment_mode}}</span></p>
+              
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div class="card border rounded  mb-3">
+            
+        <table class="product_data m-4">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Name & Price</th>
+              {% comment %} <th>Color</th> {% endcomment %}
+              <th>Quantity</th>
+              <th>Total</th>
+              <th>Status</th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for order_item in order_item %}
+            <tr>
+              <td class="product_cart_item">
+                <div class="product_cart_item_pic">
+                  <img src="{{ order_item.product.images.url }}" height="90px" alt="IMG">
+                </div>
+              </td>
+              <td class="product_cart_item_text">
+                <h6 style="font-weight: bold;">{{ order_item.product.product_name }}</h6>
+                <h6 style="font-weight: bold;">{% if order_item.product.offer %} ${{order_item.product.get_offer_price}}{% else %} ${{order_item.product.price}} {% endif %}</h6>
+
+              </td>
+              {% comment %} <td>{{ order_item.variation.color }}</td> {% endcomment %}
+              <td>{{ order_item.quantity }}</td>
+              <td class="cart__price total">{{ order_item.order.total_price |floatformat:2}}</td>
+              <td>
+                {% if order_item.status == 'Order Confirmed' %}
+                <span class="badge p-2 my-2 text-success" style="font-size: medium;">{{ order_item.status }}</span>
+                {% elif order_item.status == 'Shipped' %}
+                <span class="badge p-2 my-2 text-secondary" style="font-size: medium;">{{ order_item.status }}</span>
+                {% elif order_item.status == 'Out for delivery' %}
+                <span class="badge p-2 my-2 text-primary" style="font-size: medium;">{{ order_item.status }}</span>
+                {% elif order_item.status == 'Delivered' %}
+                <span class="badge p-2 my-2 text-success" style="font-size: medium;">{{ order_item.status }}</span>
+                {% elif order_item.status == 'Cancelled' or 'Returned' %}
+                <span class="badge p-2 my-2 text-danger" style="font-size: medium;">{{ order_item.status }}</span>
+                {% endif %}
+              </td>
+              {% if order_item.status != 'Cancelled' and order_item.status != 'Delivered' and order_item.status != 'Return'%}
+              <td>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                  data-bs-target="#exampleModals{{ forloop.counter }}">Cancel</button>
+                <!-- Modal for deleting the product -->
+                <div style="margin-top: 80px;" class="modal fade cartdata" id="exampleModals{{ forloop.counter }}" tabindex="-1"
+                  aria-labelledby="exampleModalLabel{{ forloop.counter }}" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content modal_content1">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel{{ forloop.counter }}">Confirm Cancel</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        Cancel Product {{ order_item.product.product_name }}
+                      </div>
+                      <div class="modal-footer">
+                        {% csrf_token %}
+                        <input type="hidden" class="order_id" value="{{ order_item.order.id }}">
+                        <input type="hidden" class="orderitem_id" value="{{ order_item.id }}">
+                        <button type="submit" class="btn btn-danger ordercancel">Confirm</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Deleting ended -->
+              </td>
+              {% else %}
+              
+              {% endif %}
+              {% if order_item.status != 'Cancelled' %}
+              <td>
+                {% if order_item.status == 'Delivered' %}
+                <!-- Button trigger modal -->
+                <a type="button" data-bs-toggle="modal" data-bs-target="#editprofile">
+                  <button class="btn btn-outline-dark">Return</button>
+                </a>
+                <!--Reason Modal -->
+                <div style="margin-top: 65px;" class="modal fade" id="editprofile" tabindex="-1" aria-labelledby="exampleModalLabel{{ forloop.counter }}"
+                  aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h4 class="modal-title fs-5" id="exampleModalLabel{{ forloop.counter }}">Return reason form</h4>
+                        <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
+                          <i class="fa fa-times"></i>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <form action="{% url 'order_return' order_item.id %}" enctype="multipart/form-data" method="POST">
+                          {% csrf_token %}
+                          <div class="form-outline mb-4">
+                            <select class="form-select mb-1" aria-label="Default select example" name="return_reason">
+                              <option value="Damaged Product">Damaged Product</option>
+                              <option value="Wrong item">Wrong item</option>
+                              <option value="Ordered by mistake">Ordered by mistake</option>
+                              <option value="nothing">nothing</option>
+                            </select>
+                            <label class="form-label" for="form3Example3cg">Choose issue</label>
+                          </div>
+                          <div class="form-outline mb-4">
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="return_comment"></textarea>
+                            <label class="form-label" for="form3Example3cg">Reason</label>
+                          </div>
+                          <div class="d-flex justify-content-center">
+                            <button type="submit"
+                              class="btn btn-danger btn-lg gradient-custom-4 w-50 text-light">Return</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                </div>
+                {% elif order_item.status == 'Return' %}
+                <a href="" type="button" class="btn btn-outline-dark">Track Your Return</a>
+                {% else %}
+                <a href="" type="button" class="btn btn-outline-dark">Track Your order</a>
+                {% endif %}
+              </td>
+              {% endif %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-6 mt-4">
+        <div class="continue__btn mb-4">
+            <a href="">Continue Shopping</a>
+        </div>
+    </div>
+</div>
+  </section>
+
+  <div class="col-lg-12" style="height: 130px;"">
+
+  </div>
+
+  <!--================ confirmation part end =================-->
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/alertifyjs/build/alertify.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/alertifyjs/build/alertify.min.js"></script>
+
+
+  
+ 
+  
+
+  <!--===============================================================================================-->
+
+ 
+  
+
+
+<script>
+  $(document).ready(function() {
+      $('.ordercancel').click(function(e) {
+        e.preventDefault();
+        var order_ids = $(this).closest('.modal-content').find('.order_id').val();
+        var orderitem_ids = $(this).closest('.modal-content').find('.orderitem_id').val();
+        
+        var token = $("[name='csrfmiddlewaretoken']").val();
+        
+        $.ajax({
+          method: "POST",
+          url: "{% url 'ordercancel' %}",
+          data: {
+            'order_id': order_ids,
+            'orderitem_id': orderitem_ids,
+            csrfmiddlewaretoken: token
+          },
+          success: function(response) {
+            
+            console.log(response);
+            alertify.success(response.status);
+    
+            location.reload();
+          },
+          error: function(xhr, status, error) {
+            console.log(xhr.responseText);
+            // Handle error case
+          }
+        });
+      });
+    });
+    
+</script>
+
+
+  {% endblock %} 

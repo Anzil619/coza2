@@ -1,0 +1,719 @@
+{% extends 'base.html' %}
+	
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs/build/css/alertify.min.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs/build/css/themes/default.min.css"/>
+<style>
+    .table-shopping-cart .column-4{
+        text-align: left;
+    }
+    .accordion {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.accordion {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.accordion-item {
+  border-top: 1px solid #ccc;
+}
+
+.accordion-header {
+  background-color: #f1f1f1;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.accordion-content {
+  padding: 10px;
+  display: none;
+}
+
+</style>
+
+<div class="extraspace" style="height: 60px;"></div>
+	<!-- Cart -->
+	<div class="wrap-header-cart js-panel-cart">
+		<div class="s-full js-hide-cart"></div>
+
+		<div class="header-cart flex-col-l p-l-65 p-r-25">
+			<div class="header-cart-title flex-w flex-sb-m p-b-8">
+				<span class="mtext-103 cl2">
+					Your Cart
+				</span>
+
+				<div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
+					<i class="zmdi zmdi-close"></i>
+				</div>
+			</div>
+			
+			<div class="header-cart-content flex-w js-pscroll">
+				<ul class="header-cart-wrapitem w-full">
+					<li class="header-cart-item flex-w flex-t m-b-12">
+						<div class="header-cart-item-img">
+							{% comment %} <img src="images/item-cart-01.jpg" alt="IMG"> {% endcomment %}
+						</div>
+
+						<div class="header-cart-item-txt p-t-8">
+							{% comment %} <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+								White Shirt Pleat
+							</a>
+
+							<span class="header-cart-item-info">
+								1 x $19.00
+							</span> {% endcomment %}
+						</div>
+					</li>
+
+					<li class="header-cart-item flex-w flex-t m-b-12">
+						<div class="header-cart-item-img">
+							{% comment %} <img src="images/item-cart-02.jpg" alt="IMG"> {% endcomment %}
+						</div>
+
+						<div class="header-cart-item-txt p-t-8">
+							{% comment %} <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+								Converse All Star
+							</a>
+
+							<span class="header-cart-item-info">
+								1 x $39.00
+							</span> {% endcomment %}
+						</div>
+					</li>
+
+					<li class="header-cart-item flex-w flex-t m-b-12">
+						{% comment %} <div class="header-cart-item-img">
+							<img src="images/item-cart-03.jpg" alt="IMG">
+						</div> {% endcomment %}
+
+						<div class="header-cart-item-txt p-t-8">
+							{% comment %} <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+								Nixon Porter Leather
+							</a>
+
+							<span class="header-cart-item-info">
+								1 x $17.00
+							</span> {% endcomment %}
+						</div>
+					</li>
+				</ul>
+				
+				<div class="w-full">
+					{% comment %} <div class="header-cart-total w-full p-tb-40">
+						Total: $75.00
+					</div> {% endcomment %}
+
+					<div class="header-cart-buttons flex-w w-full">
+						<a href="{% url 'cart' %}" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+							View Cart
+						</a>
+
+						<a href="{% url 'checkout' %}" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+							Check Out
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- breadcrumb -->
+	<div class="container">
+		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+			<a href="index.html" class="stext-109 cl8 hov-cl1 trans-04">
+			</a>
+
+
+			<span class="stext-109 cl4">
+                
+			</span>
+		</div>
+	</div>
+		
+	
+	<!-- Shoping Cart -->
+    
+	<!-- <form class="bg0 p-t-75 p-b-85"> -->
+        <div class="bg0 p-t-18 p-b-85">
+          
+            <div class="container-fluid">
+                {% if not cart_items %}
+                <div class="container">
+                  <h2 class="text-center text-success"> Thank you, Your order has been successfully placed</h2>
+                </div>
+                    {% else %}
+        <div class="row">
+            <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+                <div class="m-l-25 m-r--38 m-lr-0-xl">
+                    <div class="wrap-table-shopping-cart">
+                        <table class="table-shopping-cart">
+                            <tr class="table_head">
+                                <th class="column-1">Product</th>
+                                <th class="column-2"></th>
+                                <th class="column-3">Price</th>
+                                <th class="column-4">Quantity</th>
+                                <th class="column-5">Total</th>
+                                
+                            </tr>
+
+                            {% for cart_item in cart_items %}	
+                            <tr class="table_row">
+                                <td class="column-1">
+                                    <a href=""><div class="how-itemcart1">
+                                        <img src="{{cart_item.product.images.url}}" alt="IMG">
+                                    </div></a>
+                                </td>
+                                <td class="column-2"><a href="{{ cart_item.product.get_url }}">{{ cart_item.product.product_name }}</a>
+                                <p class="text-muted small">
+                                    
+                                    {% if cart_item.variations.all %}
+                                        
+                                        {% for item in cart_item.variations.all %}
+                                            {{ item.variation_category | capfirst }} : {{ item.variation_value | capfirst }} <br>
+                                            
+
+                                        {% endfor %}
+                            
+                                    {% endif %}
+                                        
+                                </p> </td>
+                                
+                                {% if cart_item.product.offer %}
+                                <td class="column-3">$ {{ cart_item.product.get_offer_price }}</td>
+                                {% else %}
+                                <td class="column-3">$ {{ cart_item.product.price }}</td>
+                                {% endif %}
+                                <td class="column-4">
+                                    {% comment %} <!-- <div class="wrap-num-product flex-w m-l-auto m-r-0">
+                                        <a href="{% url 'remove_cart' cart_item.product.id cart_item.id %}" class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+                                            <i class="fs-16 zmdi zmdi-minus"></i>
+                                        </a> --> {% endcomment %}
+
+                                        <input class="mtext-104 cl3 txt-center num-product" type="number" name="quantity" value="{{ cart_item.quantity}}">
+
+                                        
+                                        {% comment %} <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+                                            <form action="{% url 'add_cart' cart_item.product.id %}" method="post">
+                                                {% csrf_token %}
+                                                
+                                                {% for item in cart_item.variations.all %}
+                                                    
+                                            <input type="hidden" name="{{ item.variation_category | lower }}" value="{{ item.variation_value | capfirst }}">
+                                            {% endfor %}
+                                            
+                                            <a href="{% url 'add_cart' cart_item.product.id %}"> <button class="fs-16 zmdi zmdi-plus" type="submit"></i></button></a>
+                                    </form>
+                                    </div> {% endcomment %}
+                                </td>
+                                <td id="subtotal{{cart_item.product.id}}" class="column-5">$ {{ cart_item.sub_total }}</td>
+
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+
+                    <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
+                        
+
+                      <div class="flex-w flex-m m-r-20 m-tb-5">
+                        <form id="coupon_form">
+                        <input id="coupon_data" class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" name="coupon" placeholder="Coupon Code">
+                        
+                          
+                        <button class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5" type="submit">
+                          Apply coupon
+                        </button>
+                      </form>
+                      </div>
+                    </div>
+                    <!-- Add Address Button -->
+<!-- Add Address Button -->
+
+
+<button type="button" class="btn btn-primary mb-3 mt-2" data-bs-toggle="modal" data-bs-target="#addAddressModal">
+    Add Address
+  </button>
+  
+  <!-- Modal for Adding Address -->
+  <div class="modal fade" id="addAddressModal" tabindex="-1" aria-labelledby="addAddressModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addAddressModalLabel">Add Address</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Address Form -->
+          <form action="{% url 'add_address' %}" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="name" class="form-label">First Name</label>
+              <input type="text" class="form-control" id="name" name="firstname">
+            </div>
+            <div class="mb-3">
+                <label for="name" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="name" name="lastname">
+              </div>
+            <div class="mb-3">
+              <label for="phone" class="form-label">Phone</label>
+              <input type="text" class="form-control" id="phone" name="phone">
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" name="email">
+            </div>
+            <div class="mb-3">
+              <label for="address1" class="form-label">Address Line </label>
+              <input type="text" class="form-control" id="address1" name="address">
+            </div>
+            <div class="mb-3">
+              <label for="address2" class="form-label">Pincode</label>
+              <input type="text" class="form-control" id="address2" name="pincode">
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="city" class="form-label">City</label>
+                <input type="text" class="form-control" id="city" name="city">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="town" class="form-label">State</label>
+                <input type="text" class="form-control" id="town" name="state">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="country" class="form-label">Country</label>
+                <input type="text" class="form-control" id="country" name="country">
+              </div>
+              
+              <div class="col-md-6 mb-3">
+                <label for="country" class="form-label">order note</label>
+                <input type="text" class="form-control" id="country" name="ordernote">
+              </div>
+
+            </div>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save Address</button>
+        </div>
+      </div>
+    </form>
+    </div>
+  </div>
+  
+  <!-- Address Cards -->
+  
+  
+  {% for i in address %}
+      
+  <form action="{% url 'placeorder' %}" method="post">
+    {% csrf_token %}
+
+  <div class="row" id="addressCards"></div>
+        <div class="col-md-14 mb-3">
+          <div class="card mt-0">
+            <div class="card-body">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="address" id="addressRadio${addressCount}" value="{{i.id}}" required>
+                <span class="text-uppercase" style="font-weight: bold;"> {{i.first_name}} {{i.last_name}}</span>
+                <input type="hidden" name="first_name" value="{{i.first_name}} {{i.last_name}}">
+               
+             
+                <label class="form-check-label" for="addressRadio${addressCount}">
+              
+                  {{i.email}}<br>
+                  <input type="hidden" name="email" value="{{i.email}}">
+                  {{i.phone}}<br>
+                  <input type="hidden" name="phone" value="{{i.phone}}">
+                  {{i.address}}<br>
+                  {{i.pincode}}<br>
+                  {{i.city}}<br>
+                  {{i.state}}<br>
+                  {{i.country}}
+                  {{i.ordernote}}
+                </label>
+                <a href='{% url 'delete_address' i.id %}' type="button" class="btn btn-danger btn-sm ms-2">Delete</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+        
+        
+        
+       
+          </div>
+          
+
+      </div>
+
+          
+<script>
+    function deleteAddress(addressIndex) {
+  // Display a confirmation popup
+  Swal.fire({
+    title: 'Delete Address',
+    text: 'Are you sure you want to delete this address?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Delete',
+    cancelButtonText: 'Cancel'
+  }).then((result) => {
+    // If the user confirms the deletion
+    if (result.isConfirmed) {
+      // Remove the address card with the given index
+      const addressCard = document.getElementById(`addressRadio${addressIndex}`).parentNode.parentNode.parentNode;
+      addressCard.remove();
+      
+      // Show a success message
+      Swal.fire('Deleted!', 'The address has been deleted.', 'success');
+    }
+  });
+}
+
+  </script>
+
+            <div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
+                <div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm">
+                    <h4 class="mtext-109 cl2 p-b-30">
+                        Cart Totals
+                    </h4>
+
+                    <div class="flex-w flex-t bor12 p-b-13">
+                        <div class="size-208">
+                            <span class="stext-110 cl2">
+                                Subtotal: $ {{total}}
+                            </span>
+                        </div>
+                       
+                          <div class="checkout__order__total" id="coupon_block" style="display: none;">
+                              Discount <span>- $<b id="coupon_discount"></b></span>
+                              <h1 class="text-danger" style="font-size: 12px;">*Coupon Applied - <b id="coupon_code"></b></h1>
+                          </div>
+                    
+
+                        <div class="size-209">
+                          <input type="text" name="coupon" id="coupon_code1" style="display: none;">
+                          
+                          {% if usercoupon  %}
+                          
+                          {% for usercoupon in usercoupon %}
+                            
+                          
+                            
+                          <span id='grand_total' class="mtext-110 cl2">
+                            ${{usercoupon.total_price}}
+                          </span>
+                          {% endfor %}
+                          {% else %}
+                          <span id='grand_total' class="mtext-110 cl2">
+                                ${{grand_total}}
+                              </span>
+                          {% endif %}
+                        </div>
+                    </div>
+
+
+                    <div class="flex-w flex-t bor12 p-t-15 p-b-30">
+                        <div class="size-208 w-full-ssm">
+                            <span class="stext-110 cl2">
+                                Payment Method:
+                            </span>
+                        </div>
+
+                        <div class="size-209 p-r-18 p-r-0-sm w-full-ssm">
+                            <p class="stext-111 cl6 p-t-2">
+                                There are many payment methods available. Please double check your address, or contact us if you need any help.
+                            </p>
+                            
+                            <div class="p-t-15">
+                                <span class="stext-112 cl8">
+                                    Calculate Amount
+                                </span>
+                                
+                                <div class="rs1-select2 rs2-select2 bor8 bg0 m-b-12 m-t-9">
+                                    <select class="js-select2" name="payment_method">
+                                        <option>Select a payment method...</option>
+                                        <option value="cash_on_delivery" selected>Cash on delivery</option>
+                                        <option value="wallet_payment">Wallet payment</option>
+                                    </select>
+                                    <div class="dropDownSelect2"></div>
+                                </div>
+
+                                <div class=" bg0 m-b-12">
+                                    <!-- <input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="state" placeholder="State /  country"> -->
+                                </div>
+
+                                <div class=" bg0 m-b-22">
+                                    <!-- <input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="postcode" placeholder="Postcode / Zip"> -->
+                                </div>
+                                
+                                <div class="flex-w">
+                                    <button class="flex-c-m stext-101 cl1 size-115 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer payWithRazorpay">
+                                        Pay using Razorpay
+                                    </button>
+                                </div>
+                                    
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex-w flex-t p-t-27 p-b-33">
+                        <div class="size-208">
+                            <span class="mtext-101 cl2">
+                                Total:
+                            </span>
+                        </div>
+                        
+                        <div class="size-209 p-t-1">
+                          <input type="text" name="coupon" id="coupon_code2" style="display: none;">
+                          {% if usercoupon  %}
+                          {% for usercoupon in usercoupon %}
+                          
+                          <span id='grand_tota2' class="mtext-110 cl2">
+                                ${{usercoupon.total_price}}
+                              </span>
+                          {% endfor %}
+                          {% else %}
+                          <span id='grand_tota2' class="mtext-110 cl2">
+                            ${{grand_total}}
+                          </span>
+                          {% endif %}
+                        </div>
+                    </div>
+                    
+                    <button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer" type="submit">
+                        Proceed to Checkout
+                    </button>
+                </form>
+                </div>
+            </div>
+        </div>
+        
+    </form>  
+    </div>
+</div>
+
+<div class="col-md-12 mb-3">
+  
+  {% if coupons %}
+  <div class="mb-2"><h3>Available Coupon</h3></div>
+  {% for item in coupons %}
+  <div class="accordion-item" id="accordionExample">
+      <div class="accordion-header">
+          <span class="text-dark">{{forloop.counter}}.</span> <b>-{{item.discount}}% Off</b>
+      </div>
+      <div class="accordion-content" data-bs-parent="#accordionExample">
+          <p><b>*</b>Applicable only for order price more than <b>${{item.min_value}}\-</b></p>
+          <span class="ml-3">Coupon Code: <b class="text-danger">{{item.code}}</b></span>
+      </div>
+  </div>
+  {% endfor %}
+  {% else %}
+  <div class="mb-2"><h3>No Coupons Available</h3></div>
+  {% endif %}
+</div>
+{% endif %}
+    <!-- Checkout End -->
+</section>
+
+
+
+<div style="height: 80px;"></div>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+  {% for msg in messages %}
+    swal("", "{{msg}}", "error");
+  {% endfor %}
+  </script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+  integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/alertifyjs/build/alertify.min.js"></script>
+
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+
+
+<script>
+$(document).ready(function () {
+
+  $('.payWithRazorpay').click(function (e) {
+    e.preventDefault();
+
+    var fname = $("[name='first_name']").val()
+    var phone = $("[name='phone']").val()
+    var email = $("[name='email']").val()
+    var token = $("[name='csrfmiddlewaretoken']").val()
+    var selectedAddress = $("input[name='address']:checked").val();
+    console.log(selectedAddress,'daxo');
+    if(!selectedAddress)
+    {
+      swal("Alert!", "Address fields is mandatory!", "error");
+      return false;
+
+    }
+    else
+    {
+      $.ajax({
+          method:"GET",
+          url:"/order/proceedtopay/",
+          success: function(response) {
+          var options = {
+            "key": "rzp_test_cr8SaA3VKRjdLc", // Enter the Key ID generated from the Dashboard
+            "amount": response.total_price*100,//response.total_price * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            "currency": "INR",
+            "name": "COZA STORE",
+            "description": "Thank you for buying with us",
+            "image": "https://example.com/your_logo",
+            //"order_id": "order_IluGWxBm9U8zJ8", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            "handler": function (responseb){
+              alert(responseb.razorpay_payment_id);
+                data = {
+                  
+                  "payment_method" : "Razorpay",
+                  "payment_id" : responseb.razorpay_payment_id,
+                  "address": selectedAddress,
+                  csrfmiddlewaretoken: token
+                  
+                }
+                  $.ajax({
+                    method:"POST",
+                    url:"/order/checkout/proceed-to-pay/",
+                    data: data,
+                    success: function (responsec) {
+                      console.log(responsec)
+                      swal("Congratulations!", responsec.status,"success").then((value) => {
+                          window.location.href = '/order/orders/'
+                      });
+                    }
+
+                });
+            },
+            "prefill": {
+                "name": fname,
+                "email" : email,
+                'contact' : phone,
+            },
+            
+            "theme": {
+                "color": "#3399cc"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        rzp1.on('payment.failed', function (response){
+                alert(response.error.code);
+                alert(response.error.description);
+                alert(response.error.source);
+                alert(response.error.step);
+                alert(response.error.reason);
+                alert(response.error.metadata.order_id);
+                alert(response.error.metadata.payment_id);
+        });
+        rzp1.open();
+          console.log(responsec);
+
+          }
+      });
+      
+
+    }
+
+
+
+
+
+    
+  });
+
+});
+</script>
+
+<script src="{% static 'assetUser/js/jquery.nice-select.min.js' %}"></script>
+
+  <script src="{% static 'assetUser/js/stellar.js' %}"></script>
+  <script src="{% static 'assetUser/js/price_rangs.js' %}"></script><script src="{% static 'assetUser/js/jquery.nice-select.min.js' %}"></script>
+
+  <script src="{% static 'assetUser/js/stellar.js' %}"></script>
+  <script src="{% static 'assetUser/js/price_rangs.js' %}"></script>
+
+ 
+<script>
+    $('#coupon_form').on('submit', function (e) {
+
+        e.preventDefault();
+        console.log('function calling..... coupon')
+        $.ajax({
+            type: "POST",
+            url: "{% url 'coupons' %}",
+            data: {
+                coupon: $('#coupon_data').val(),
+                grand_total: '{{grand_total}}',
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                dataType: "json",
+
+            },
+
+            
+
+            success: function (data) {
+              
+                $('#output').html(data.msg) /* response message */
+                $('#grand_total').text('$' + data.grand_total)
+                $('#grand_tota2').text('$' + data.grand_total)
+                if (data.coupon_discount > 0) {
+                    $('#coupon_block').show()
+                    $('#accordionExample').hide()
+                }
+                $('#coupon_discount').html(data.coupon_discount)
+                $('#coupon_code').html(data.coupon_code)
+                $('#coupon_code1').val(data.coupon_code)
+                $('#coupon_code2').val(data.coupon_code)
+                
+
+            },
+
+            failure: function () {
+
+            }
+
+
+        });
+
+
+    });  
+
+    // Get all accordion headers
+var accordionHeaders = document.getElementsByClassName("accordion-header");
+
+// Add click event listener to each accordion header
+for (var i = 0; i < accordionHeaders.length; i++) {
+  accordionHeaders[i].addEventListener("click", function() {
+    // Toggle the display of the accordion content
+    this.nextElementSibling.style.display = (this.nextElementSibling.style.display === "block") ? "none" : "block";
+  });
+}
+
+</script>
+
+
+{% endblock %}	
+

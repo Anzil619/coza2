@@ -1,0 +1,316 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block content %} 
+<section class="confirmation_part padding_top cartdata p-5">
+  <div class="container">
+    <div class="row">
+      
+      <div class="text-center text-danger">
+        {% if messages %}
+            {% for message in messages %}
+                <strong>{{ message }}</strong>
+            {% endfor %}
+        {% endif %}
+    </div>
+              
+      <div class="col-lg-6 col-lx-4">
+        <div class="card border rounded  mb-3">
+          <div class="card-body">
+            <h5 class="card-title" style="font-weight: bold;">{{address.first_name}} {{address.last_name}}</h5>
+            <p class="card-text">{{address.address}},{{address.city}},{{address.state}} </p>
+            <div>
+              <!-- Button trigger modal -->
+                <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#address{{forloop.counter}}">
+                  View
+                </button>
+
+                <!-- Modal -->
+                <div style="margin-top: 80px;" class="modal fade" id="address{{forloop.counter}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h4 class="modal-title fs-6" id="staticBackdropLabel">View address</h4>
+                        <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
+                          <i class="fa fa-times"></i>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+
+                        <div class="row">
+                          <div class="col-sm-5">
+                            <p class="mb-0">Full Name</p>
+                          </div>
+                          <div class="col-sm-7">
+                              {{ address.first_name}} {{ address.last_name}}
+                          </div>
+                        </div>
+                        <hr>
+
+                        <div class="row">
+                          <div class="col-sm-5">
+                            <p class="mb-0">Address</p>
+                          </div>
+                          <div class="col-sm-7">
+                              {{ address.address}}
+                          </div>
+                        </div>
+                        <hr>
+
+                        <div class="row">
+                          <div class="col-sm-5">
+                            <p class="mb-0">Contact Number</p>
+                          </div>
+                          <div class="col-sm-7">
+                              {{ address.phone}}
+                          </div>
+                        </div>
+                        <hr>
+
+                        <div class="row">
+                          <div class="col-sm-5">
+                            <p class="mb-0">Email</p>
+                          </div>
+                          <div class="col-sm-7">
+                              {{ address.email}}
+                          </div>
+                        </div>
+                        <hr>
+
+                        <div class="row">
+                          <div class="col-sm-5">
+                            <p class="mb-0">City</p>
+                          </div>
+                          <div class="col-sm-7">
+                              {{ address.city}}
+                          </div>
+                        </div>
+                        <hr>
+
+                        <div class="row">
+                          <div class="col-sm-5">
+                            <p class="mb-0">Pincode</p>
+                          </div>
+                          <div class="col-sm-7">
+                              {{ address.pincode}}
+                          </div>
+                        </div>
+                        <hr>
+
+                        <div class="row">
+                          <div class="col-sm-5">
+                            <p class="mb-0">State</p>
+                          </div>
+                          <div class="col-sm-7">
+                              {{ address.state}}
+                          </div>
+                        </div>
+                        <hr>
+
+                        <div class="row">
+                          <div class="col-sm-5">
+                            <p class="mb-0">Country</p>
+                          </div>
+                          <div class="col-sm-7">
+                              {{ address.country}}
+                          </div>
+                        </div>
+
+
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="col-lg-6 col-lx-4">
+        <div class="card border rounded  mb-3">
+          <div class="card-body">
+            <h6 class="card-title" style="font-weight: bold;">ORDER INFO</h6>
+            <p class="card-text">Tracking Id<span> : {{order.tracking_no}}</span></p>
+            <p class="card-text">Order Date<span> : {{order.created_at}}</span></p>
+            <p class="card-text">Payment Method<span> : {{order.payment_mode}}</span></p>
+            
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12">
+        <div class="card border rounded  mb-3">
+          
+      <table class="product_data m-4">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Name & Price</th>
+            {% comment %} <th>Color</th> {% endcomment %}
+            <th>Quantity</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Action</th>
+            {% comment %} <th></th>
+            <th></th> {% endcomment %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for order_item in order_item %}
+          <tr>
+            <td class="product_cart_item">
+              <div class="product_cart_item_pic">
+                <img src="{{ order_item.product.images.url }}" height="90px" alt="IMG">
+              </div>
+            </td>
+            <td class="product_cart_item_text">
+              <h6 style="font-weight: bold;">{{ order_item.product.product_name }}</h6>
+              <h6 style="font-weight: bold;">{% if order_item.product.offer %} ${{order_item.product.get_offer_price}}{% else %} ${{order_item.product.price}} {% endif %}</h6>
+
+            </td>
+            {% comment %} <td>{{ order_item.variation.color }}</td> {% endcomment %}
+            <td>{{ order_item.quantity }}</td>
+            <td class="cart__price total">{{ order_item.order.total_price |floatformat:2}}</td>
+            <td>
+              {% if order_item.status == 'Order Confirmed' %}
+              <span class="badge p-2 my-2 text-success" style="font-size: medium;">{{ order_item.status }}</span>
+              {% elif order_item.status == 'Shipped' %}
+              <span class="badge p-2 my-2 text-secondary" style="font-size: medium;">{{ order_item.status }}</span>
+              {% elif order_item.status == 'Out for delivery' %}
+              <span class="badge p-2 my-2 text-primary" style="font-size: medium;">{{ order_item.status }}</span>
+              {% elif order_item.status == 'Delivered' %}
+              <span class="badge p-2 my-2 text-success" style="font-size: medium;">{{ order_item.status }}</span>
+              {% elif order_item.status == 'Cancelled' or 'Returned' %}
+              <span class="badge p-2 my-2 text-danger" style="font-size: medium;">{{ order_item.status }}</span>
+              {% endif %}
+            </td>
+            <td> <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#productModal2{{forloop.counter}}">Change Status</button> </td>
+            
+            <div class="modal fade" id="productModal2{{forloop.counter}}" tabindex="-1" role="dialog" aria-labelledby="productModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="productModalLabel">Edit Product</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                      <div class="modal-body">
+                          <form action="{% url 'update_order' order_item.id %}" method ="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+
+                            {% if order_item.status == 'Order Confirmed' %}
+                              <div class="form-group">
+                                <input class="ml-3" type="radio" name="status" value="Order Confirmed" disabled checked>
+                                <label for="dreamweaver" class="ml-2 mt-2" >Order Confirmed</label>
+                              </div>
+
+                              <div class="form-group">
+                                <input class="ml-3" type="radio" name="status" value="Shipped">
+                                <label for="dreamweaver" class="ml-2 mt-2" >shipped</label>
+                              </div>
+
+                              <div class="form-group">
+                                <input class="ml-3" type="radio" name="status" value="Out for delivery" disabled>
+                                <label for="dreamweaver" class="ml-2 mt-2" >out for delivery</label>
+                              </div>
+
+                              <div class="form-group">
+                                <input class="ml-3" type="radio" name="status" value="Delivered" disabled>
+                                <label for="dreamweaver" class="ml-2 mt-2" >delivered</label>
+                              </div>
+                              <div class="form-group">
+                                <input class="ml-3" type="radio" name="status" value="Cancelled">
+                                <label for="dreamweaver" class="ml-2 mt-2" >Cancel</label>
+                              </div>
+                              
+                            </div>
+                            {% elif order_item.status == 'Shipped' %}
+                            <div class="form-group">
+                              <input class="ml-3" type="radio" name="status" value="Order Confirmed" disabled >
+                              <label for="dreamweaver" class="ml-2 mt-2" >Order Confirmed</label>
+                            </div>
+                            <div class="form-group">
+                              <input class="ml-3" type="radio" name="status" value="Shipped" disabled checked>
+                              <label for="dreamweaver" class="ml-2 mt-2" >shipped</label>
+                            </div>
+                            <div class="form-group">
+                              <input class="ml-3" type="radio" name="status" value="Out for delivery">
+                              <label for="dreamweaver" class="ml-2 mt-2" >out for delivery</label>
+                            </div>
+                            <div class="form-group">
+                              <input class="ml-3" type="radio" name="status" value="Delivered" disabled>
+                              <label for="dreamweaver" class="ml-2 mt-2" >delivered</label>
+                            </div>
+                            <div class="form-group">
+                                <input class="ml-3" type="radio" name="status" value="Cancelled">
+                                <label for="dreamweaver" class="ml-2 mt-2" >Cancel</label>
+                              </div>
+                          </div>
+                            {% elif order_item.status == 'Out for delivery' %}
+                            <div class="form-group">
+                              <input class="ml-3" type="radio" name="status" value="Order Confirmed" disabled >
+                              <label for="dreamweaver" class="ml-2 mt-2" >Order Confirmed</label>
+                            </div>
+                            <div class="form-group">
+                              <input class="ml-3" type="radio" name="status" value="Shipped" disabled>
+                              <label for="dreamweaver" class="ml-2 mt-2" >shipped</label>
+                            </div>
+                            <div class="form-group">
+                              <input class="ml-3" type="radio" name="status" value="Out for delivery" disabled checked>
+                              <label for="dreamweaver" class="ml-2 mt-2" >out for delivery</label>
+                            </div>
+                            <div class="form-group">
+                              <input class="ml-3" type="radio" name="status" value="Delivered">
+                              <label for="dreamweaver" class="ml-2 mt-2" >delivered</label>
+                            </div><div class="form-group">
+                              <input class="ml-3" type="radio" name="status" value="Cancelled">
+                              <label for="dreamweaver" class="ml-2 mt-2" >Cancel</label>
+                            </div>
+                        
+                      </div>
+                      {% else %}
+                      <div class="form-group">
+                        <input class="ml-3" type="radio" name="status" value="Order Confirmed" disabled >
+                        <label for="dreamweaver" class="ml-2 mt-2" >Order Confirmed</label>
+                      </div>
+                      <div class="form-group">
+                        <input class="ml-3" type="radio" name="status" value="Shipped" disabled>
+                        <label for="dreamweaver" class="ml-2 mt-2" >shipped</label>
+                      </div>
+                      <div class="form-group">
+                        <input class="ml-3" type="radio" name="status" value="Out for delivery" disabled>
+                        <label for="dreamweaver" class="ml-2 mt-2" >out for delivery</label>
+                      </div>
+                      <div class="form-group">
+                        <input class="ml-3" type="radio" name="status" value="Delivered" disabled>
+                        <label for="dreamweaver" class="ml-2 mt-2" >delivered</label>
+                      </div><div class="form-group">
+                        <input class="ml-3" type="radio" name="status" value="Cancelled" disabled>
+                        <label for="dreamweaver" class="ml-2 mt-2" >Cancel</label>
+                      </div>
+                  
+                      </div>
+                      {% endif %}
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-primary">Save</button>
+                      </div>
+                    </form>
+                  </div>
+              </div>
+          </div> 
+        </div>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</section>
+
+
+
+  {% endblock %} 

@@ -1,0 +1,104 @@
+{% extends 'dashboard/base.html' %}
+	
+{% load static %}
+{% block content %}
+
+{% comment %} <div class="col-12 grid-margin stretch-card">
+    <div class="card"> {% endcomment %}
+      <div class="card-body">
+        <h4 class="card-title">Basic form elements</h4>
+        <p class="card-description"> Basic form elements </p>
+        
+        
+            
+        <form class="forms-sample" method="post">
+            {% csrf_token %}
+          <div class="form-group">
+            <label for="exampleInputName1">Product name</label>
+            <input type="text" class="form-control" id="exampleInputName1" name="product_name"  placeholder="Product name" value ="{{product.product_name}}">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail3">Stock</label>
+            <input type="number" class="form-control" id="exampleInputEmail3" name="stock" placeholder="Stock" value ="{{product.stock}}">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword4">price</label>
+            <input type="text" class="form-control" id="exampleInputPassword4" name="price" placeholder="price" value ="{{product.price}}">
+          </div>
+          <div class="form-group">
+            <label for="exampleSelectGender">Category</label>
+            <select class="form-control" name="category" id="exampleSelectGender">
+                <option value="{{product.category}}" disabled selected > Category</option>
+                {% for i in category %}
+                <option value ="{{i.category_name}}">{{i.category_name}}</option>
+                {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="exampleSelectGender">Sub_Category</label>
+            <select class="form-control" name="sub_category" id="exampleSelectGender">
+                
+                <option value="{{product.sub_category}}" disabled selected >choose Sub Category</option>
+                {% for i in sub_category %}
+                <option value="{{i.sub_category_name}}">{{i.sub_category_name}}</option>
+                {% endfor %}
+              
+              
+            </select>
+          </div>
+          <div class="form-group">
+            <label>File upload</label>
+            <input type="file" name="image" class="file-upload-default">
+            <div class="input-group col-xs-12">
+              <input type="text" class="form-control file-upload-info" disabled placeholder="Image" value="{{product.images}}">
+              <span class="input-group-append">
+                <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+              </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>File upload</label>
+            <input type="file" name="image1" class="file-upload-default">
+            <div class="input-group col-xs-12">
+              <input type="text" class="form-control file-upload-info" disabled placeholder="image1" value="{{product.image1}}">
+              <span class="input-group-append">
+                <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+              </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>File upload</label>
+            <input type="file" name="image2" class="file-upload-default">
+            <div class="input-group col-xs-12">
+              <input type="text" class="form-control file-upload-info" disabled placeholder="Image2" value="{{product.image2}}">
+              <span class="input-group-append">
+                <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+              </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>File upload</label>
+            <input type="file" name="image3" class="file-upload-default">
+            <div class="input-group col-xs-12">
+              <input type="text" class="form-control file-upload-info" disabled placeholder="Image3" value="{{product.image3}}">
+              <span class="input-group-append">
+                <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+              </span>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="exampleTextarea1">description</label>
+            <textarea class="form-control" id="exampleTextarea1" name="description" rows="4">{{product.description}}"</textarea>
+          </div>
+          <button type="submit" class="btn btn-primary mr-2">Submit</button>
+          <button class="btn btn-light">Cancel</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% comment %} </div> {% endcomment %}
+
+{% endblock %}

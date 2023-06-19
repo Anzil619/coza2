@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+	
+{% load static %}
+{% block content %}
+
+<div class="extraspace" style="height: 60px;"></div>
+<div class="bg0 p-t-18">
+          
+    <div class="container-fluid">
+       
+        <div class="container py-5">
+          <h2 class="text-center text-success"> Thank you, Your order has been successfully placed</h2>
+          
+          {% for i in order %}
+            
+          <div class="card my-5 py-3">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table mb-0">
+                  <tbody>
+                    <tr>
+                      <th>Order ID:</th>
+                      <td class="small">{{i.order.id}}</td>
+                    </tr>
+                    
+                    <tr>
+                      <th>Order Status:</th>
+                      <td class="small">{{i.status}}</td>
+                    </tr>
+                    <tr>
+                      <th>Total Amount:</th>
+                      <td class="small">${{i.order.total_price}}</td>
+                    </tr>
+                    
+            
+                    <tr>
+                      <th>Shipping Address:</th>
+                      <td class="small">{{i.order.address.address}}</td>
+                    </tr>
+                    
+                    {% comment %} <tr>
+                      <th>Estimated Delivery Date:</th>
+                      <td class="small">2023-06-20</td>
+                    </tr> {% endcomment %}
+                    
+                    <tr>
+                      <th>Payment Method:</th>
+                      <td class="small">{{i.order.payment_mode}}</td>
+                    </tr>
+                    <tr>
+                      <th colspan="2">Order Items:</th>
+                    </tr>
+                    <tr>
+                      <td colspan="2">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th>Product</th>
+                              <th>Quantity</th>
+                              <th>Price</th>
+                              
+                            </tr>
+
+                          </thead>
+                          <tbody>
+
+                            <tr>
+                              <td>{{i.product.product_name}}</td>
+                              <td>{{i.quantity}}</td>
+                              
+                              {% if i.product.offer %}
+                              <td>${{i.product.get_offer_price}}</td>
+                              {% else %}
+                              <td>${{i.product.price}}</td>
+                              {% endif %}
+                              {% comment %} <td>$100.00</td> {% endcomment %}
+                            </tr>
+
+                          </tbody>
+                        </table>
+
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        
+{% endblock %}
