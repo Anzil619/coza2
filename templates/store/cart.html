@@ -252,38 +252,36 @@
     $(document).ready(function() {
         $(document).on('click', '.decrement', function(e) {
             e.preventDefault();
-			var qty = $('input[name=quantity]').val();
+            var qty = $('input[name=quantity]').val();
 
-			console.log('qty: ',qty);
-			if (qty==0){
-				console.log('worked');
-				return
-			}
- 
-			var cart_item = $(this).data('cart_item');
+            console.log('qty: ', qty);
+            if (qty === '1') {
+                console.log('Minimum quantity reached');
+                return; // Stops the function execution when the quantity is 1
+            }
+
+            var cart_item = $(this).data('cart_item');
             var product_id = $(this).data('product_id');
             var token = $('input[name=csrfmiddlewaretoken]').val();
-			console.log(product_id,cart_item,"anzil");
-    
+            console.log(product_id, cart_item, "anzil");
+
             $.ajax({
                 method: "POST",
                 url: "{% url 'remove_cart' %}",
                 data: {
                     'product_id': product_id,
-					'cart_item_id': cart_item,
+                    'cart_item_id': cart_item,
                     csrfmiddlewaretoken: '{{csrf_token}}'
                 },
                 success: function(response) {
-                    
-					sub_total = parseInt(response.sub_total)
-					console.log(response);
-					
-					document.getElementById('single_pro_total'+cart_item).textContent= '$' + response.single_pro_total
-					document.getElementById('sub_total').textContent= '$' + sub_total
-					document.getElementById('tax').textContent = '$' + 2*(sub_total/100)
-					document.getElementById('grandtotal').textContent = sub_total + (2*(sub_total/100)) 
-                    
-					
+
+                    sub_total = parseInt(response.sub_total);
+                    console.log(response);
+
+                    document.getElementById('single_pro_total' + cart_item).textContent = '$' + response.single_pro_total;
+                    document.getElementById('sub_total').textContent = '$' + sub_total;
+                    document.getElementById('tax').textContent = '$' + 2 * (sub_total / 100);
+                    document.getElementById('grandtotal').textContent = sub_total + (2 * (sub_total / 100));
                 }
             });
         });
