@@ -5,7 +5,7 @@ from carts.views import _cart_id
 from carts.models import CartItem
 from store.models import PriceFilter, Product
 from django.db.models import Q
-from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.core.paginator import Paginator
 
 
 
@@ -100,38 +100,5 @@ def search(request):
                 
     }
     return render(request, 'store/all_products.html', context)
-
-def products_by_sub_category(request, sub_category_slug=None):
-    sub_category = None
-    categories = None
-    products = None
-
-    if  sub_category_slug != None:
-        sub_category = get_object_or_404(Sub_Category, slug=sub_category_slug)
-        products = Product.objects.filter(
-            sub_category=sub_category, is_available=True)
-        categories = Category.objects.all()
-        sub = Sub_Category.objects.all()
-        # product_count = products.count()
-        # paginator = Paginator(products, 8)
-        # page = request.GET.get('page')
-        # paged_products = paginator.get_page(page)
-
-    else:
-        categories = Category.objects.all()
-        sub = Sub_Category.objects.all()
-        products = Product.objects.all()
-        # product_count = products.count()
-        # paginator = Paginator(products, 8)
-        # page = request.GET.get('page')
-        # paged_products = paginator.get_page(page)
-
-    context = {
-        'products': products,
-        'categories': categories,
-        'sub': sub,
-    }
-
-    return render(request, 'user__shop.html', context)
 
 

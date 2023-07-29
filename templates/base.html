@@ -3,21 +3,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Home</title>
+	<title>Coza Store</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
     
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
-
-    
 <!-- CSS CDN -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
 
 <!-- JavaScript Bundle CDN (includes Popper.js) -->
-
-
-
 
 <link rel="stylesheet" type="text/css" href="{%static 'stylesSifan.min.css'%}">
 <!--===============================================================================================-->	
@@ -99,7 +94,7 @@
             <nav class="limiter-menu-desktop container">
                 
                 <!-- Logo desktop -->		
-                <a href="#" class="logo">
+                <a href="{% url 'homepage' %}" class="logo">
                     <img src="{%static 'images/icons/logo-01.png'%}" alt="IMG-LOGO">
                 </a>
 
@@ -108,20 +103,16 @@
                     <ul class="main-menu">
                         <li class="">
                             <a href="{% url 'homepage' %}">Home</a>
-                            
                         </li>
 
                         <li>
                             <a href="{% url 'store' %}">Shop</a>
                         </li>
 
-                    
-
                         <li>
                             <a href="{% url 'blog' %}">Blog</a>
                         </li>
 
-                        
                         <li>
                             <a href="{% url 'about' %}">About</a>
                         </li>
@@ -153,7 +144,7 @@
     <div class="wrap-header-mobile">
         <!-- Logo moblie -->		
         <div class="logo-mobile">
-            <a href="index.html"><img src="{%static 'images/icons/logo-01.png'%}" alt="IMG-LOGO"></a>
+            <a href="{% url 'homepage' %}"><img src="{%static 'images/icons/logo-01.png'%}" alt="IMG-LOGO"></a>
         </div>
 
         <!-- Icon header -->
@@ -213,11 +204,7 @@
         <ul class="main-menu-m">
             <li>
                 <a href="{% url 'homepage' %}">Home</a>
-                <ul class="sub-menu-m">
-                    <li><a href="index.html">Homepage 1</a></li>
-                    <li><a href="home-02.html">Homepage 2</a></li>
-                    <li><a href="home-03.html">Homepage 3</a></li>
-                </ul>
+                
                 <span class="arrow-main-menu-m">
                     <i class="fa fa-angle-right" aria-hidden="true"></i>
                 </span>
@@ -227,20 +214,18 @@
                 <a href="{% url 'store' %}">Shop</a>
             </li>
 
+           
+
             <li>
-                <a href="shoping-cart.html" class="label1 rs1" data-label1="hot">Features</a>
+                <a href="{% url 'blog' %}">Blog</a>
             </li>
 
             <li>
-                <a href="blog.html">Blog</a>
+                <a href="{% url 'about' %}">About</a>
             </li>
 
             <li>
-                <a href="about.html">About</a>
-            </li>
-
-            <li>
-                <a href="contact.html">Contact</a>
+                <a href="{% url 'contact_us' %}">Contact</a>
             </li>
         </ul>
     </div>
@@ -296,15 +281,11 @@
                         </span>
                     </div>
                 </li>
-
-                
             {% endfor %}
             </ul>
             
             <div class="w-full">
-                <div class="header-cart-total w-full p-tb-40">
-                    Total: $75.00
-                </div>
+                
 
                 <div class="header-cart-buttons flex-w w-full">
                     <a href="{% url 'cart' %}" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
@@ -336,19 +317,19 @@
 
                 <ul>
                     <li class="p-b-10">
-                        <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                        <a href="{% url 'store' %}" class="stext-107 cl7 hov-cl1 trans-04">
                             Women
                         </a>
                     </li>
 
                     <li class="p-b-10">
-                        <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                        <a href="{% url 'store' %}" class="stext-107 cl7 hov-cl1 trans-04">
                             Men
                         </a>
                     </li>
 
                     <li class="p-b-10">
-                        <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                        <a href="{% url 'store' %}" class="stext-107 cl7 hov-cl1 trans-04">
                             Shoes
                         </a>
                     </li>
@@ -470,7 +451,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     </div>
 </footer>
 
-
 <!-- Back to top -->
 <div class="btn-back-to-top" id="myBtn">
     <span class="symbol-btn-back-to-top">
@@ -480,7 +460,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
-
 <!--===============================================================================================-->	
 <script src="{%static 'vendor/jquery/jquery-3.2.1.min.js'%}"></script>
 <!--===============================================================================================-->
@@ -506,7 +485,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <script src="{%static 'js/slick-custom.js'%}"></script>
 <!--===============================================================================================-->
 <script src="{%static 'vendor/parallax100/parallax100.js'%}"></script>
-
 <script>
     $('.parallax100').parallax100();
 </script>
@@ -529,9 +507,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <script src="{%static 'vendor/isotope/isotope.pkgd.min.js'%}"></script>
 <!--===============================================================================================-->
 <script src="{%static 'vendor/sweetalert/sweetalert.min.js'%}"></script>
-<script>
 
-   
+<script>
     $('.js-addwish-detail').each(function(){
         var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();
 
@@ -576,7 +553,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <!--===============================================================================================-->
 <script src="{%static 'js/main.js'%}"></script>
 <!-- paginator js -->
-
 
 </body>
 </html>

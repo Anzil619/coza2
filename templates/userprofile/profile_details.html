@@ -4,12 +4,6 @@
 {% load static %}
 {% block content %}
 
-
-
-<!--===============================================================================================-->	
-
-
-
 <section style="background-color: #fff;">
   <div style="height: 60px;"></div>
     <div class="container py-5">  
@@ -76,8 +70,7 @@
                 <a href="{% url 'orders' %}" class="btn btn-outline-dark ">My orders</a>
               </div>
               <div>
-                <!-- <a class=" btn btn-success text-white mb-0 h5 text-end"> -->
-                        <span class="">Wallet :</span>
+                  <span class="">Wallet :</span>
                    ${{request.user.wallet|floatformat:0}} 
                 </a>
               </div>
@@ -449,127 +442,14 @@
           </div>
         {% endif %}
       {% endfor %}
-
-      
-
-      <br>
-      <br>
-
     </div>
-   
-  
-  
-  
-  <!--===============================================================================================-->
 
-  <!-- paginator js -->
   </section>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.5.0/js/bootstrap.bundle.min.js"></script>
-  <!--===============================================================================================-->	
-  
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.5.0/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
- 
-<script>
-  $('.parallax100').parallax100();
-</script>
-
-  <script>
-    $('.js-pscroll').each(function(){
-        $(this).css('position','relative');
-        $(this).css('overflow','hidden');
-        var ps = new PerfectScrollbar(this, {
-            wheelSpeed: 1,
-            scrollingThreshold: 1000,
-            wheelPropagation: false,
-        });
-
-        $(window).on('resize', function(){
-            ps.update();
-        })
-    });
-</script>
-
-  <script>
- 
-      const myTextField = document.getElementById("id_fullname");
-      myTextField.addEventListener("keypress", function(event) {
-        const key = event.key;
-        const isLetterOrSpace = /[a-zA-Z\s]/.test(key);
-        if (!isLetterOrSpace) {
-          event.preventDefault();
-        }
-      });
-
-      myTextField.addEventListener("paste", function(event) {
-        const pastedText = event.clipboardData.getData('text/plain');
-        const hasNumber = /\d/.test(pastedText);
-        if (hasNumber) {
-          event.preventDefault();
-        }
-      });
 
 
-
-  setTimeout(function(){
-          $('#message').fadeOut('slow')
-      }, 2000)
-
-      function submitForm(event) {
-  event.preventDefault(); // prevent form from submitting
-
-  var inputs = document.forms["myForm"].getElementsByTagName("input");
-  for (var i = 0; i < inputs.length; i++) {
-    if (inputs[i].value == "") {
-      alert("Please fill in all fields");
-      return false;
-    }
-  }
-  success: function(json){
-
-    if (json.status == 'true'){
-      window.location.reload()
-      return;
-    }
-
-    var messdiv = document.getElementById('message')
-    messdiv.style.display = "block";
-    messdiv.textContent = json.message
-
-  }
-
-  error: function(xhr, errmsg, err){
-
-
-  }
-
-  });
-
-  // All fields have values, submit the form
-}
-
-  
-  <script>
-    $(".js-select2").each(function(){
-        $(this).select2({
-            minimumResultsForSearch: 20,
-            dropdownParent: $(this).next('.dropDownSelect2')
-        });
-    })
-</script>
-
-<script>
-  $('.gallery-lb').each(function() { // the containers for all your galleries
-      $(this).magnificPopup({
-          delegate: 'a', // the selector for gallery item
-          type: 'image',
-          gallery: {
-              enabled:true
-          },
-          mainClass: 'mfp-fade'
-      });
-  });
-</script>
 {% endblock %}

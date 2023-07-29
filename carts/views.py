@@ -1,13 +1,9 @@
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from carts.models import Cart, CartItem
 from django.core.exceptions import ObjectDoesNotExist
 from store.models import Product, Variation
-from django.http import HttpResponse
 from django.shortcuts import redirect
 from .models import Product, Variation, Cart, CartItem
-from django.contrib.auth.decorators import login_required
-from wishlist.models import Wishlist
 
 # Create your views here.
 def _cart_id(request):
@@ -82,8 +78,6 @@ def add_cart(request, product_id):
                 cart_item.variations.add(*product_variation)
             cart_item.save()
 
-        
-            
         return redirect('cart')
 
 
@@ -140,7 +134,7 @@ def add_cart(request, product_id):
                     item.variations.clear()
                     item.variations.add(*product_variation)
                 item.save()
-                # return HttpResponse('false')
+      
         else:
             cart_item = CartItem.objects.create(
                 product=product,
@@ -152,8 +146,6 @@ def add_cart(request, product_id):
                 cart_item.variations.add(*product_variation)
             cart_item.save()
 
-        
-            
         return redirect('cart')
 
 
@@ -268,7 +260,6 @@ def cart(request ,total=0, quantity=0, cart_item=None):
 
 
 def remove_cart_item(request, product_id, cart_item_id):
-    # cart = Cart.objects.get(cart_id=_cart_id(request))
     product = get_object_or_404(Product, id=product_id)
     cart_item = CartItem.objects.get(product=product, id=cart_item_id)
     cart_item.delete()

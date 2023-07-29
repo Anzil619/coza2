@@ -3,8 +3,8 @@ from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from store.models import Product
-
 from wishlist.models import Wishlist
+
 # Create your views here.
 
 @login_required(login_url='user_login')

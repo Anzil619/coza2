@@ -5,14 +5,12 @@ from django.contrib.auth.decorators import login_required
 from carts.models import Cart, CartItem
 from carts.views import _cart_id
 from accounts.models import CustomUser
-from userprofile.models import Address, UserProfile
+from userprofile.models import Address
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
 from store.models import Product
 from . models import Coupon, Order, OrderItem, ReturnOrder, UserCoupon
-from django.shortcuts import get_object_or_404, render, redirect
-from django.template.loader import render_to_string
-from xhtml2pdf import pisa
+from django.shortcuts import render, redirect
 import csv
 import random
 
@@ -258,9 +256,7 @@ def orders(request):
 def ordercancel(request):
     
     order_id = request.POST.get('order_id')
-    print("order_id",order_id)
     order_item_id= request.POST.get('orderitem_id')
-    print("order_item_id",order_item_id)
     orders = Order.objects.get(id=order_id)
     order_items = OrderItem.objects.get(id=order_item_id)
 
@@ -270,7 +266,6 @@ def ordercancel(request):
         wallet.save()
 
     order_items.product.stock+=order_items.quantity
-    # order_items.quantity = 0
     order_items.status = 'Cancelled'
     order_items.save()
     return redirect('orders')
@@ -381,24 +376,4 @@ def export_csv(request):
 
 
 
-# def export_pdf(request):
-#     # Retrieve the orders
-#     expenses = Order.objects.all()
-
-#     # Prepare the data for the template
-#     context = {
-#         'expenses': expenses,
-#     }
-
-#     # Render the template to HTML
-#     rendered_html = render_to_string('pdf_template.html', context)
-
-#     # Create a PDF response
-#     response = HttpResponse(content_type='application/pdf')
-#     response['Content-Disposition'] = 'attachment; filename=Expenses.pdf'
-
-#     # Generate the PDF from the HTML content
-#     pisa.CreatePDF(rendered_html, dest=response)
-
-#     return response
 

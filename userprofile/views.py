@@ -1,14 +1,12 @@
 from django.shortcuts import redirect, render
 from accounts.models import CustomUser
 
-from userprofile.models import Address, UserProfile
+from userprofile.models import Address
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
-from django.contrib.auth.hashers import check_password
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
-from accounts.forms import editprofile
-from django.contrib.auth.decorators import login_required
+
 
 
 # Create your views here.

@@ -2,14 +2,9 @@
 	
 {% load static %}
 {% block content %}
-<link href="{%static 'https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900'%}" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs/build/css/alertify.min.css"/>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs/build/css/themes/default.min.css"/>
+
 <link rel="stylesheet" href="{%static 'paginator/css/ionicons.min.css'%}">
 <link rel="stylesheet" href="{%static 'paginator/css/style.css'%}">
-
-
-
     <div class="extra_space" style="height: 60px;">
 
     </div>
@@ -42,11 +37,8 @@
 								type="text">
 							<button class="submit" type="submit"></button>
 						</form>
-
 					</div>	
 				</div>
-				
-				
 			</div>
             
             
@@ -70,9 +62,7 @@
 						<div class="block2-pic hov-img0">
 							<a href="{{ i.product.get_url }}"><img src="{{i.product.images.url}}" alt="IMG-PRODUCT"></a>
 
-							{% comment %} <a href="{{ i.product.get_url }}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
-							</a> {% endcomment %}
+						
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
@@ -266,48 +256,38 @@
 </div>
 
 			<!-- Load more -->
-			  <div class="flex-c-m flex-w w-full p-t-45">
-				
-				{% if products.has_other_pages %}
-					
-				
-					
-				<div class="block-27">
-		  <ul class="">
-			{% if products.has_previous %}
-			<li><a href="?page={{products.previous_page_number}}">&lt;</a></li>
-			{% else %}
-			<li class=""><a href="#" style="pointer-events: none;">&lt;</a></li>
-			{% endif %}
+    <div class="flex-c-m flex-w w-full p-t-45">
+    
+    {% if products.has_other_pages %}
+    <div class="block-27">
+    <ul class="">
+    {% if products.has_previous %}
+    <li><a href="?page={{products.previous_page_number}}">&lt;</a></li>
+    {% else %}
+    <li class=""><a href="#" style="pointer-events: none;">&lt;</a></li>
+    {% endif %}
+    {% for i in products.paginator.page_range %}
+    {% if products.number == i %}
+    <li class="active"><a href=""><span>{{i}}</span></a></li>
+    {% else %}
+    <li class=""><a href="?page={{i}}"><span>{{i}}</span></a></li>
+    {% endif %}
+    {% endfor %}
+        
+    {% if products.has_next %}
+    <li><a href="?page={{products.next_page_number}}">&gt;</a></li>
+    {% else %}
+    <li><a href="#" style="pointer-events: none;">&gt;</a></li>
+    {% endif %}
+    </ul>
+</div>
+{% endif %}
+    </div>   
+    
+</div>
+</div> 
 
-			
-			{% for i in products.paginator.page_range %}
-			
-			{% if products.number == i %}
-			<li class="active"><a href=""><span>{{i}}</span></a></li>
-			{% else %}
-			<li class=""><a href="?page={{i}}"><span>{{i}}</span></a></li>
 
-			{% endif %}
-				
-			{% endfor %}
-				
-			
-			
-			{% if products.has_next %}
-				
-			<li><a href="?page={{products.next_page_number}}">&gt;</a></li>
-			{% else %}
-			<li><a href="#" style="pointer-events: none;">&gt;</a></li>
-			{% endif %}
-		  </ul>
-		</div>
-		{% endif %}
-			</div>   
-			
-		</div>
-		
-	</div> 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/alertifyjs/build/alertify.min.js"></script>
 <script src="{%static 'paginator/js/jquery.min.js'%}"></script>
@@ -315,19 +295,10 @@
 <script src="{%static 'paginator/js/bootstrap.min.js'%}"></script>
 <script src="{%static 'paginator/js/main.js'%}"></script>
 
-<script src="{% static 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js' %}"></script>
-
-<script src="{% static 'https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js' %}" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-<script src="{% static 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js' %}" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/alertifyjs/build/alertify.min.js"></script>
 <script>
 $(document).ready(function() {
 	$(document).on('click', '.deleteWishlit', function(e) {
 		e.preventDefault();
-
-		
 		var prod_id = $(this).data('prod_id');
 		console.log(prod_id,"daxo");
 		var token = $('input[name=csrfmiddlewaretoken]').val();

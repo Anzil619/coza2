@@ -2,18 +2,16 @@
 from datetime import datetime, timedelta
 import re
 from django.shortcuts import get_object_or_404, redirect, render
-from django.contrib.auth.models import User
 from django.contrib.auth.models import auth
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import cache_control
 from userprofile.models import Address
 from order.models import Order, OrderItem
-from dashboard.forms import ProductForm
 from store.models import Product, Variation,PriceFilter,ProductOffer
 from category.models import Category,Sub_Category
 from django.db.models.functions import TruncDay,Cast
-from order.models import Coupon, UserCoupon
+from order.models import Coupon
 from django.db.models import Sum,DateField
 from accounts.models import CustomUser
 

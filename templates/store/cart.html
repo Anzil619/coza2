@@ -26,58 +26,34 @@
 			<div class="header-cart-content flex-w js-pscroll">
 				<ul class="header-cart-wrapitem w-full">
 					<li class="header-cart-item flex-w flex-t m-b-12">
-						{% comment %} <div class="header-cart-item-img">
-							<img src="images/item-cart-01.jpg" alt="IMG">
-						</div> {% endcomment %}
+						
 
 						<div class="header-cart-item-txt p-t-8">
-							{% comment %} <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								White Shirt Pleat
-							</a> {% endcomment %}
-
-							{% comment %} <span class="header-cart-item-info">
-								1 x $19.00
-							</span> {% endcomment %}
+							
 						</div>
 					</li>
 
 					<li class="header-cart-item flex-w flex-t m-b-12">
-						{% comment %} <div class="header-cart-item-img">
-							<img src="images/item-cart-02.jpg" alt="IMG">
-						</div> {% endcomment %}
+						
 
 						<div class="header-cart-item-txt p-t-8">
-							{% comment %} <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								Converse All Star
-							</a> {% endcomment %}
+						
 
-							{% comment %} <span class="header-cart-item-info">
-								1 x $39.00
-							</span> {% endcomment %}
+							
 						</div>
 					</li>
 
 					<li class="header-cart-item flex-w flex-t m-b-12">
-						{% comment %} <div class="header-cart-item-img">
-							<img src="images/item-cart-03.jpg" alt="IMG">
-						</div> {% endcomment %}
+						
 
 						<div class="header-cart-item-txt p-t-8">
-							{% comment %} <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								Nixon Porter Leather
-							</a> {% endcomment %}
-
-							{% comment %} <span class="header-cart-item-info">
-								1 x $17.00
-							</span> {% endcomment %}
+							
 						</div>
 					</li>
 				</ul>
 				
 				<div class="w-full">
-					{% comment %} <div class="header-cart-total w-full p-tb-40">
-						Total: $75.00
-					</div> {% endcomment %}
+					
 
 					<div class="header-cart-buttons flex-w w-full">
 						<a href="#" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10 js-hide-cart">
@@ -203,9 +179,6 @@
 						</div>
 
 						<div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
-							
-
-							
 						</div>
 					</div>
 				</div>
@@ -273,7 +246,6 @@
 		</div>
 	</div>
 		
-
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/alertifyjs/build/alertify.min.js"></script>
 <script>
@@ -302,7 +274,7 @@
                     csrfmiddlewaretoken: '{{csrf_token}}'
                 },
                 success: function(response) {
-                    // alertify.success(response.status);
+                    
 					sub_total = parseInt(response.sub_total)
 					console.log(response);
 					
@@ -310,7 +282,7 @@
 					document.getElementById('sub_total').textContent= '$' + sub_total
 					document.getElementById('tax').textContent = '$' + 2*(sub_total/100)
 					document.getElementById('grandtotal').textContent = sub_total + (2*(sub_total/100)) 
-                    // $('.cartdata').load(location.href + " .cartdata");
+                    
 					
                 }
             });
@@ -349,7 +321,7 @@
 					document.getElementById('sub_total').textContent=sub_total
 					document.getElementById('tax').textContent = 2*(sub_total/100)
 					document.getElementById('grandtotal').textContent = sub_total + (2*(sub_total/100))
-                    // $('.cartdata').load(location.href + " .cartdata");
+                    
 					
                 }
             });
@@ -357,10 +329,6 @@
     });
 	
  </script>
-
-	
-	
-	
 
 {% endblock %}	
 
