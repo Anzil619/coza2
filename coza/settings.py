@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 from decouple import config
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -50,6 +53,8 @@ INSTALLED_APPS = [
     'wishlist',
     'mathfilters',
     'extras',
+    'cloudinary',
+    
 ]
 
 MIDDLEWARE = [
@@ -147,7 +152,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS=[
-    os.path.join(BASE_DIR,'static')
+    os.path.join(BASE_DIR / 'static')
 ]
 
 MEDIA_URL = '/media/'
@@ -175,3 +180,10 @@ EMAIL_USE_TLS = True
 
 razor_pay_key_id = 'rzp_test_cr8SaA3VKRjdLc'
 key_secret = 'K61WIFU3qLgrCiduGJaUBLPl'
+
+
+cloudinary.config( 
+  cloud_name = "dddnhzhfk", 
+  api_key = "441367976627735", 
+  api_secret = "z51uZmWBKz4Ige2IEpFvK5mvMsM" 
+)
